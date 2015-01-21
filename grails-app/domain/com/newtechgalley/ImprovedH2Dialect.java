@@ -2,6 +2,7 @@
  * Created by Louis on 21/01/2015.
  */
 
+package com.newtechgalley;
 import org.hibernate.dialect.H2Dialect;
 
 public class ImprovedH2Dialect extends H2Dialect {

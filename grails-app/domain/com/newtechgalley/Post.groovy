@@ -4,8 +4,7 @@ class Post {
     String title
     String content
     int note
-    List<Comment> commentList
-    static hasMany = [categories: Categorie]
+    static hasMany = [categories: Categorie, comments:Comment]
 
     static constraints = {
         title blank: false, unique: true
