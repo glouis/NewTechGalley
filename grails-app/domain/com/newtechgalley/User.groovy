@@ -1,11 +1,16 @@
 package com.newtechgalley
 
+import java.util.Date
+
 class User {
 
 	transient springSecurityService
 
 	String username
 	String password
+	String adress
+	String mail
+	Date birthDate
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
