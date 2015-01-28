@@ -20,6 +20,15 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'user', 'error')} required">
+	<label for="user">
+		<g:message code="post.user.label" default="User" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="user" name="user.id" from="${com.newtechgalley.User.list()}" optionKey="id" required="" value="${postInstance?.user?.id}" class="many-to-one"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: postInstance, field: 'categories', 'error')} ">
 	<label for="categories">
 		<g:message code="post.categories.label" default="Categories" />
@@ -34,7 +43,16 @@
 		<g:message code="post.comments.label" default="Comments" />
 		
 	</label>
-	<g:select name="comments" from="${com.newtechgalley.Comment.list()}" multiple="multiple" optionKey="id" size="5" value="${postInstance?.comments*.id}" class="many-to-many"/>
+	
+<ul class="one-to-many">
+<g:each in="${postInstance?.comments?}" var="c">
+    <li><g:link controller="comment" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="comment" action="create" params="['post.id': postInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'comment.label', default: 'Comment')])}</g:link>
+</li>
+</ul>
+
 
 </div>
 

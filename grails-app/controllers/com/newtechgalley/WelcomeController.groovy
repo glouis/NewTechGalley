@@ -6,6 +6,7 @@ import org.springframework.security.access.annotation.Secured
 class WelcomeController {
 
     def index() {
-        render 'Hello World!' //Printing a Message
+        def user = getAuthenticatedUser()
+        render 'Hello ' + user.username + ' !' //Printing a Message
     }
 }

@@ -26,7 +26,11 @@
 					
 						<g:sortableColumn property="content" title="${message(code: 'comment.content.label', default: 'Content')}" />
 					
+						<th><g:message code="comment.user.label" default="User" /></th>
+					
 						<g:sortableColumn property="note" title="${message(code: 'comment.note.label', default: 'Note')}" />
+					
+						<th><g:message code="comment.post.label" default="Post" /></th>
 					
 					</tr>
 				</thead>
@@ -36,7 +40,11 @@
 					
 						<td><g:link action="show" id="${commentInstance.id}">${fieldValue(bean: commentInstance, field: "content")}</g:link></td>
 					
+						<td>${fieldValue(bean: commentInstance, field: "user")}</td>
+					
 						<td>${fieldValue(bean: commentInstance, field: "note")}</td>
+					
+						<td>${fieldValue(bean: commentInstance, field: "post")}</td>
 					
 					</tr>
 				</g:each>

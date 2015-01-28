@@ -32,11 +32,29 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${commentInstance?.user}">
+				<li class="fieldcontain">
+					<span id="user-label" class="property-label"><g:message code="comment.user.label" default="User" /></span>
+					
+						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${commentInstance?.user?.id}">${commentInstance?.user?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${commentInstance?.note}">
 				<li class="fieldcontain">
 					<span id="note-label" class="property-label"><g:message code="comment.note.label" default="Note" /></span>
 					
 						<span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${commentInstance}" field="note"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${commentInstance?.post}">
+				<li class="fieldcontain">
+					<span id="post-label" class="property-label"><g:message code="comment.post.label" default="Post" /></span>
+					
+						<span class="property-value" aria-labelledby="post-label"><g:link controller="post" action="show" id="${commentInstance?.post?.id}">${commentInstance?.post?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

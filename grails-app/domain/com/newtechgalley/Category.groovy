@@ -1,9 +1,9 @@
 package com.newtechgalley
 
-class Categorie {
+class Category {
     String name
 
     static constraints = {
-        name blank: false
+        name blank: false, nullable: false
     }
 }

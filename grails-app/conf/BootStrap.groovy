@@ -1,3 +1,4 @@
+import com.newtechgalley.Category
 import com.newtechgalley.Role
 import com.newtechgalley.User
 import com.newtechgalley.UserRole
@@ -11,6 +12,15 @@ class BootStrap {
 
         def testUser = new User(username: 'me', password: 'password')
         testUser.save(flush: true)
+
+        def categoryPhp = new Category(name: "PHP")
+        categoryPhp.save(flush: true)
+        def categoryJava = new Category(name: "Java")
+        categoryJava.save(flush: true)
+        def categoryCpp = new Category(name: "C++")
+        categoryCpp.save(flush: true)
+        def categoryWeb = new Category(name: "web")
+        categoryWeb.save(flush: true)
 
         UserRole.create testUser, adminRole, true
 
