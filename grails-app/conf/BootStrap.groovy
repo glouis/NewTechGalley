@@ -1,4 +1,5 @@
 import com.newtechgalley.Category
+import com.newtechgalley.Post
 import com.newtechgalley.Role
 import com.newtechgalley.User
 import com.newtechgalley.UserRole
@@ -12,6 +13,8 @@ class BootStrap {
 
         def testUser = new User(username: 'me', password: 'password')
         testUser.save(flush: true)
+        def lambdaUser = new User(username: 'foo', password: 'bar')
+        lambdaUser.save(flush: true)
 
         def categoryPhp = new Category(name: "PHP")
         categoryPhp.save(flush: true)
@@ -23,9 +26,13 @@ class BootStrap {
         categoryWeb.save(flush: true)
 
         UserRole.create testUser, adminRole, true
+        UserRole.create lambdaUser, userRole, true
 
-        assert User.count() == 1
+        def post1 = new Post(title: "welcome", content: "welcome you!", note: 0, user: testUser, categories: categoryWeb)
+        post1.save(flush: true)
+
+        assert User.count() == 2
         assert Role.count() == 2
-        assert UserRole.count() == 1
+        assert UserRole.count() == 2
     }
 }

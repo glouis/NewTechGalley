@@ -55,7 +55,7 @@
 					<span id="categories-label" class="property-label"><g:message code="post.categories.label" default="Categories" /></span>
 					
 						<g:each in="${postInstance.categories}" var="c">
-						<span class="property-value" aria-labelledby="categories-label"><g:link controller="categorie" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="categories-label"><g:link controller="category" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>

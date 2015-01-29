@@ -20,6 +20,24 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'points', 'error')} required">
+	<label for="points">
+		<g:message code="user.points.label" default="Points" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="points" type="number" value="${userInstance.points}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'birthDate', 'error')} ">
+	<label for="birthDate">
+		<g:message code="user.birthDate.label" default="Birth Date" />
+		
+	</label>
+	<g:datePicker name="birthDate" precision="day"  value="${userInstance?.birthDate}" default="none" noSelection="['': '']" />
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'accountExpired', 'error')} ">
 	<label for="accountExpired">
 		<g:message code="user.accountExpired.label" default="Account Expired" />

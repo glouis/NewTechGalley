@@ -1,7 +1,5 @@
 <%@ page import="com.newtechgalley.Post" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: postInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="post.title.label" default="Title" />
@@ -34,7 +32,7 @@
 		<g:message code="post.categories.label" default="Categories" />
 		
 	</label>
-	<g:select name="categories" from="${com.newtechgalley.Categorie.list()}" multiple="multiple" optionKey="id" size="5" value="${postInstance?.categories*.id}" class="many-to-many"/>
+	<g:select name="categories" from="${com.newtechgalley.Category.list()}" multiple="multiple" optionKey="id" size="5" value="${postInstance?.categories*.id}" class="many-to-many"/>
 
 </div>
 

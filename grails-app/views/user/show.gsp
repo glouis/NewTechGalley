@@ -41,6 +41,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${userInstance?.points}">
+				<li class="fieldcontain">
+					<span id="points-label" class="property-label"><g:message code="user.points.label" default="Points" /></span>
+					
+						<span class="property-value" aria-labelledby="points-label"><g:fieldValue bean="${userInstance}" field="points"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.birthDate}">
+				<li class="fieldcontain">
+					<span id="birthDate-label" class="property-label"><g:message code="user.birthDate.label" default="Birth Date" /></span>
+					
+						<span class="property-value" aria-labelledby="birthDate-label"><g:formatDate date="${userInstance?.birthDate}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${userInstance?.accountExpired}">
 				<li class="fieldcontain">
 					<span id="accountExpired-label" class="property-label"><g:message code="user.accountExpired.label" default="Account Expired" /></span>

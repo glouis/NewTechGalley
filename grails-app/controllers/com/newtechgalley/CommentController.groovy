@@ -6,7 +6,6 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-@Secured(['ROLE_ADMIN'])
 class CommentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -75,6 +74,7 @@ class CommentController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def delete(Comment commentInstance) {
 
         if (commentInstance == null) {
