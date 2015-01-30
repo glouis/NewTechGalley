@@ -11,7 +11,7 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 	int points
-	Date birthDate
+	String mailAddress
 
 	static transients = ['springSecurityService']
 
@@ -19,7 +19,7 @@ class User {
 		username blank: false, unique: true
 		password blank: false
 		points nullable: true
-		birthDate nullable: true
+		mailAddress nullable: true
 	}
 
 	static mapping = {

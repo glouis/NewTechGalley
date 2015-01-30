@@ -97,3 +97,9 @@ p {
 .NTGImage {
     margin-left: 10px;
 }
+
+.footer {
+    background-color: darkred;
+    text-align: center;
+    color: #ffffff;
+}
