@@ -29,12 +29,12 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'birthDate', 'error')} ">
-	<label for="birthDate">
-		<g:message code="user.birthDate.label" default="Birth Date" />
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'mailAddress', 'error')} ">
+	<label for="mailAddress">
+		<g:message code="user.mailAddress.label" default="Mail Address" />
 		
 	</label>
-	<g:datePicker name="birthDate" precision="day"  value="${userInstance?.birthDate}" default="none" noSelection="['': '']" />
+	<g:textField name="mailAddress" value="${userInstance?.mailAddress}"/>
 
 </div>
 

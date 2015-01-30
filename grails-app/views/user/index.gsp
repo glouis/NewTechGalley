@@ -30,7 +30,7 @@
 					
 						<g:sortableColumn property="points" title="${message(code: 'user.points.label', default: 'Points')}" />
 					
-						<g:sortableColumn property="birthDate" title="${message(code: 'user.birthDate.label', default: 'Birth Date')}" />
+						<g:sortableColumn property="mailAddress" title="${message(code: 'user.mailAddress.label', default: 'Mail Address')}" />
 					
 						<g:sortableColumn property="accountExpired" title="${message(code: 'user.accountExpired.label', default: 'Account Expired')}" />
 					
@@ -48,7 +48,7 @@
 					
 						<td>${fieldValue(bean: userInstance, field: "points")}</td>
 					
-						<td><g:formatDate date="${userInstance.birthDate}" /></td>
+						<td>${fieldValue(bean: userInstance, field: "mailAddress")}</td>
 					
 						<td><g:formatBoolean boolean="${userInstance.accountExpired}" /></td>
 					
