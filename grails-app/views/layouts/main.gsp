@@ -21,11 +21,11 @@
 		<div id="NTGLogo" role="banner"><a href="${createLink(uri: '/')}"><asset:image class="NTGImage" src="Crimson_Galley_by_crimson_galley_resized.jpg" alt="NewTechGalley"/></a><h1 class="bannerText">NewTechGalley</h1></div>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="unanswered" href="${createLink(uri: '/')}"><g:message code="default.unanswered.label" default="Unanswered"/></a></li>
+				<li><a class="unanswered" href="${createLink(controller: 'post')}"><g:message code="default.unanswered.label" default="Unanswered"/></a></li>
 				<li><a class="categories" href="${createLink(controller: 'category')}"><g:message code="default.categories.label" default="Categories"/></a></li>
-				<li><a class="top100" href="${createLink(uri: '/')}"><g:message code="default.tophundred.label" default="Top 100"/></a></li>
+				<li><a class="top100" href="${createLink(controller: 'post')}"><g:message code="default.tophundred.label" default="Top 100"/></a></li>
 				<li><a class="users" href="${createLink(controller: 'user')}"><g:message code="default.users.label" default="Users"/></a></li>
-				<li><a class="badges" href="${createLink(uri: '/')}"><g:message code="default.badges.label" default="Badges"/></a></li>
+				<li><a class="badges" href="${createLink(controller: 'badge')}"><g:message code="default.badges.label" default="Badges"/></a></li>
 				<li><a class="askQuestion" href="${createLink(controller: 'post')}"><g:message code="default.aksQuestion.label" default="Ask Question"/></a></li>
 				<g:if test="${isLogInView}"><li><a class="logOut" href="${createLink(controller: 'logout')}"><g:message code="default.logout.label" default="Log Out"/></a></li></g:if>
 				<g:else><li><a class="logIn" href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Log In"/></a></li></g:else>

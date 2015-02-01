@@ -41,6 +41,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${commentInstance?.creationDate}">
+				<li class="fieldcontain">
+					<span id="creationDate-label" class="property-label"><g:message code="comment.creationDate.label" default="Creation Date" /></span>
+					
+						<span class="property-value" aria-labelledby="creationDate-label"><g:formatDate date="${commentInstance?.creationDate}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${commentInstance?.lastEditDate}">
+				<li class="fieldcontain">
+					<span id="lastEditDate-label" class="property-label"><g:message code="comment.lastEditDate.label" default="Last Edit Date" /></span>
+					
+						<span class="property-value" aria-labelledby="lastEditDate-label"><g:formatDate date="${commentInstance?.lastEditDate}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${commentInstance?.note}">
 				<li class="fieldcontain">
 					<span id="note-label" class="property-label"><g:message code="comment.note.label" default="Note" /></span>

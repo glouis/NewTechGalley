@@ -1,5 +1,7 @@
 <%@ page import="com.newtechgalley.Post" %>
 
+
+
 <div class="fieldcontain ${hasErrors(bean: postInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="post.title.label" default="Title" />
@@ -24,6 +26,24 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:select id="user" name="user.id" from="${com.newtechgalley.User.list()}" optionKey="id" required="" value="${postInstance?.user?.id}" class="many-to-one"/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'creationDate', 'error')} required">
+	<label for="creationDate">
+		<g:message code="post.creationDate.label" default="Creation Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="creationDate" precision="day"  value="${postInstance?.creationDate}"  />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'lastEditDate', 'error')} ">
+	<label for="lastEditDate">
+		<g:message code="post.lastEditDate.label" default="Last Edit Date" />
+		
+	</label>
+	<g:datePicker name="lastEditDate" precision="day"  value="${postInstance?.lastEditDate}" default="none" noSelection="['': '']" />
 
 </div>
 

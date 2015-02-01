@@ -50,6 +50,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${postInstance?.creationDate}">
+				<li class="fieldcontain">
+					<span id="creationDate-label" class="property-label"><g:message code="post.creationDate.label" default="Creation Date" /></span>
+					
+						<span class="property-value" aria-labelledby="creationDate-label"><g:formatDate date="${postInstance?.creationDate}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${postInstance?.lastEditDate}">
+				<li class="fieldcontain">
+					<span id="lastEditDate-label" class="property-label"><g:message code="post.lastEditDate.label" default="Last Edit Date" /></span>
+					
+						<span class="property-value" aria-labelledby="lastEditDate-label"><g:formatDate date="${postInstance?.lastEditDate}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${postInstance?.categories}">
 				<li class="fieldcontain">
 					<span id="categories-label" class="property-label"><g:message code="post.categories.label" default="Categories" /></span>

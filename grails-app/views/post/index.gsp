@@ -30,6 +30,10 @@
 					
 						<th><g:message code="post.user.label" default="User" /></th>
 					
+						<g:sortableColumn property="creationDate" title="${message(code: 'post.creationDate.label', default: 'Creation Date')}" />
+					
+						<g:sortableColumn property="lastEditDate" title="${message(code: 'post.lastEditDate.label', default: 'Last Edit Date')}" />
+					
 						<g:sortableColumn property="note" title="${message(code: 'post.note.label', default: 'Note')}" />
 					
 					</tr>
@@ -43,6 +47,10 @@
 						<td>${fieldValue(bean: postInstance, field: "content")}</td>
 					
 						<td>${fieldValue(bean: postInstance, field: "user")}</td>
+					
+						<td><g:formatDate date="${postInstance.creationDate}" /></td>
+					
+						<td><g:formatDate date="${postInstance.lastEditDate}" /></td>
 					
 						<td>${fieldValue(bean: postInstance, field: "note")}</td>
 					

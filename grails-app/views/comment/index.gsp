@@ -28,6 +28,10 @@
 					
 						<th><g:message code="comment.user.label" default="User" /></th>
 					
+						<g:sortableColumn property="creationDate" title="${message(code: 'comment.creationDate.label', default: 'Creation Date')}" />
+					
+						<g:sortableColumn property="lastEditDate" title="${message(code: 'comment.lastEditDate.label', default: 'Last Edit Date')}" />
+					
 						<g:sortableColumn property="note" title="${message(code: 'comment.note.label', default: 'Note')}" />
 					
 						<th><g:message code="comment.post.label" default="Post" /></th>
@@ -41,6 +45,10 @@
 						<td><g:link action="show" id="${commentInstance.id}">${fieldValue(bean: commentInstance, field: "content")}</g:link></td>
 					
 						<td>${fieldValue(bean: commentInstance, field: "user")}</td>
+					
+						<td><g:formatDate date="${commentInstance.creationDate}" /></td>
+					
+						<td><g:formatDate date="${commentInstance.lastEditDate}" /></td>
 					
 						<td>${fieldValue(bean: commentInstance, field: "note")}</td>
 					

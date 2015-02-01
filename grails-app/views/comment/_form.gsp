@@ -20,6 +20,24 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: commentInstance, field: 'creationDate', 'error')} required">
+	<label for="creationDate">
+		<g:message code="comment.creationDate.label" default="Creation Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="creationDate" precision="day"  value="${commentInstance?.creationDate}"  />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: commentInstance, field: 'lastEditDate', 'error')} ">
+	<label for="lastEditDate">
+		<g:message code="comment.lastEditDate.label" default="Last Edit Date" />
+		
+	</label>
+	<g:datePicker name="lastEditDate" precision="day"  value="${commentInstance?.lastEditDate}" default="none" noSelection="['': '']" />
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: commentInstance, field: 'note', 'error')} required">
 	<label for="note">
 		<g:message code="comment.note.label" default="Note" />

@@ -56,6 +56,15 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'badges', 'error')} ">
+	<label for="badges">
+		<g:message code="user.badges.label" default="Badges" />
+		
+	</label>
+	<g:select name="badges" from="${com.newtechgalley.Badge.list()}" multiple="multiple" optionKey="id" size="5" value="${userInstance?.badges*.id}" class="many-to-many"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'enabled', 'error')} ">
 	<label for="enabled">
 		<g:message code="user.enabled.label" default="Enabled" />

@@ -14,7 +14,8 @@ class User {
 	String mailAddress
 
 	static transients = ['springSecurityService']
-
+	static hasMany = [badges: Badge]
+	
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false

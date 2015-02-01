@@ -77,6 +77,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${userInstance?.badges}">
+				<li class="fieldcontain">
+					<span id="badges-label" class="property-label"><g:message code="user.badges.label" default="Badges" /></span>
+					
+						<g:each in="${userInstance.badges}" var="b">
+						<span class="property-value" aria-labelledby="badges-label"><g:link controller="badge" action="show" id="${b.id}">${b?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${userInstance?.enabled}">
 				<li class="fieldcontain">
 					<span id="enabled-label" class="property-label"><g:message code="user.enabled.label" default="Enabled" /></span>
