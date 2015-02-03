@@ -6,4 +6,9 @@ class Category {
     static constraints = {
         name blank: false, nullable: false
     }
+
+    @Override
+    String toString () {
+        return name
+    }
 }

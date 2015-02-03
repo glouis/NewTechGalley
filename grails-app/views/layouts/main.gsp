@@ -26,9 +26,11 @@
 				<li><a class="top100" href="${createLink(controller: 'post')}"><g:message code="default.tophundred.label" default="Top 100"/></a></li>
 				<li><a class="users" href="${createLink(controller: 'user')}"><g:message code="default.users.label" default="Users"/></a></li>
 				<li><a class="badges" href="${createLink(controller: 'badge')}"><g:message code="default.badges.label" default="Badges"/></a></li>
-				<li><a class="askQuestion" href="${createLink(controller: 'post')}"><g:message code="default.aksQuestion.label" default="Ask Question"/></a></li>
-				<g:if test="${isLogInView}"><li><a class="logOut" href="${createLink(controller: 'logout')}"><g:message code="default.logout.label" default="Log Out"/></a></li></g:if>
-				<g:else><li><a class="logIn" href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Log In"/></a></li></g:else>
+				<li><a class="askQuestion" href="${createLink(uri: '/post/create')}"><g:message code="default.aksQuestion.label" default="Ask Question"/></a></li>
+				<li><a class="logOut" href="${createLink(controller: 'logout')}"><g:message code="default.logout.label" default="Log Out"/></a></li>
+				<li><a class="logIn" href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Log In"/></a></li>
+				<g:isLogged><li><a class="logOut" href="${createLink(controller: 'logout')}"><g:message code="default.logout.label" default="Log Out"/></a></li></g:isLogged>
+				<g:isNotLogged><li><a class="logIn" href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Log In"/></a></li></g:isNotLogged>
 			</ul>
 		</div>
 		<g:layoutBody/>

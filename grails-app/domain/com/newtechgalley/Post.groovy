@@ -3,12 +3,14 @@ package com.newtechgalley
 class Post {
     String title
     String content
-    Date creationDate
+    Date creationDate = new Date()
     Date lastEditDate
-    int note
+    int note = 0
 
     User user
     static hasMany = [categories: Category, comments:Comment]
+
+    static mapping = {content type: 'text'}
 
     static constraints = {
         title blank: false, nullable: false, unique: true

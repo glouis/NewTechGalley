@@ -46,6 +46,7 @@ class UserController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def edit(User userInstance) {
         respond userInstance
     }

@@ -594,3 +594,13 @@ a.skip {
 	position: absolute;
 	left: -9999px;
 }
+
+input[type=text] {
+	width: 480px;
+	height: 1em;
+}
+
+textarea {
+	width: 480px;
+	height: 13em;
+}

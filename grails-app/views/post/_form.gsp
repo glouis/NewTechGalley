@@ -16,36 +16,13 @@
 		<g:message code="post.content.label" default="Content" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="content" required="" value="${postInstance?.content}"/>
+	<g:textArea name="content" required="" value="${postInstance?.content}"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'user', 'error')} required">
-	<label for="user">
-		<g:message code="post.user.label" default="User" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="user" name="user.id" from="${com.newtechgalley.User.list()}" optionKey="id" required="" value="${postInstance?.user?.id}" class="many-to-one"/>
+<g:hiddenField name="user.id" value="${postInstance?.user?.id}" class="many-to-one" />
 
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'creationDate', 'error')} required">
-	<label for="creationDate">
-		<g:message code="post.creationDate.label" default="Creation Date" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="creationDate" precision="day"  value="${postInstance?.creationDate}"  />
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'lastEditDate', 'error')} ">
-	<label for="lastEditDate">
-		<g:message code="post.lastEditDate.label" default="Last Edit Date" />
-		
-	</label>
-	<g:datePicker name="lastEditDate" precision="day"  value="${postInstance?.lastEditDate}" default="none" noSelection="['': '']" />
-
-</div>
+<g:hiddenField name="lastEditDate" precision="minute" value="${postInstance?.lastEditDate}" default="none" />
 
 <div class="fieldcontain ${hasErrors(bean: postInstance, field: 'categories', 'error')} ">
 	<label for="categories">
@@ -71,15 +48,6 @@
 </li>
 </ul>
 
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: postInstance, field: 'note', 'error')} required">
-	<label for="note">
-		<g:message code="post.note.label" default="Note" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="note" type="number" value="${postInstance.note}" required=""/>
 
 </div>
 

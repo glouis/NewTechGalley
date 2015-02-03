@@ -2,8 +2,8 @@ package com.newtechgalley
 
 class Comment {
     String content
-    int note
-    Date creationDate
+    int note = 0
+    Date creationDate = new Date()
     Date lastEditDate
 
     User user
