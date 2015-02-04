@@ -103,3 +103,35 @@ p {
     text-align: center;
     color: #ffffff;
 }
+
+
+.nav input {
+    color: #666666;
+    display: block;
+    padding: 0.25em 0.7em;
+    text-decoration: none;
+    -moz-border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    border-radius: 0.3em;
+    background-color: transparent;
+    border: none;
+}
+
+.nav input:active, .nav input:visited {
+    color: #666666;
+}
+
+.nav input:focus, .nav input:hover {
+    background-color: #999999;
+    color: #ffffff;
+    outline: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+.no-borderradius .nav input:focus, .no-borderradius .nav input:hover {
+    background-color: transparent;
+    color: #444444;
+    text-decoration: underline;
+}
+

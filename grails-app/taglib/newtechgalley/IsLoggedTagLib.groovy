@@ -1,19 +1,21 @@
 package newtechgalley
 
+import grails.plugin.springsecurity.SpringSecurityService
+
 class IsLoggedTagLib {
-    static defaultEncodeAs = [taglib:'html']
-    //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
-    def springSecurityService
+
+    SpringSecurityService springSecurityService
+
     def isLogged = { attrs, body ->
         def isLoggedIn = springSecurityService.loggedIn
-        if(isLoggedIn == true) {
+        if(isLoggedIn) {
             out << body()
         }
     }
 
     def isNotLogged = { attrs, body ->
         def isLoggedIn = springSecurityService.loggedIn
-        if(isLoggedIn == false) {
+        if(!isLoggedIn) {
             out << body()
         }
     }

@@ -21,16 +21,15 @@
 		<div id="NTGLogo" role="banner"><a href="${createLink(uri: '/')}"><asset:image class="NTGImage" src="Crimson_Galley_by_crimson_galley_resized.jpg" alt="NewTechGalley"/></a><h1 class="bannerText">NewTechGalley</h1></div>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="unanswered" href="${createLink(controller: 'post')}"><g:message code="default.unanswered.label" default="Unanswered"/></a></li>
-				<li><a class="categories" href="${createLink(controller: 'category')}"><g:message code="default.categories.label" default="Categories"/></a></li>
-				<li><a class="top100" href="${createLink(controller: 'post')}"><g:message code="default.tophundred.label" default="Top 100"/></a></li>
-				<li><a class="users" href="${createLink(controller: 'user')}"><g:message code="default.users.label" default="Users"/></a></li>
-				<li><a class="badges" href="${createLink(controller: 'badge')}"><g:message code="default.badges.label" default="Badges"/></a></li>
-				<li><a class="askQuestion" href="${createLink(uri: '/post/create')}"><g:message code="default.aksQuestion.label" default="Ask Question"/></a></li>
-				<li><a class="logOut" href="${createLink(controller: 'logout')}"><g:message code="default.logout.label" default="Log Out"/></a></li>
-				<li><a class="logIn" href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Log In"/></a></li>
-				<g:isLogged><li><a class="logOut" href="${createLink(controller: 'logout')}"><g:message code="default.logout.label" default="Log Out"/></a></li></g:isLogged>
-				<g:isNotLogged><li><a class="logIn" href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Log In"/></a></li></g:isNotLogged>
+				<li><a href="${createLink(controller: 'post')}"><g:message code="default.unanswered.label" default="Unanswered"/></a></li>
+				<li><a href="${createLink(controller: 'category')}"><g:message code="default.categories.label" default="Categories"/></a></li>
+				<li><a href="${createLink(controller: 'post')}"><g:message code="default.tophundred.label" default="Top 100"/></a></li>
+				<li><a href="${createLink(controller: 'user')}"><g:message code="default.users.label" default="Users"/></a></li>
+				<li><a href="${createLink(controller: 'badge')}"><g:message code="default.badges.label" default="Badges"/></a></li>
+				<li><a href="${createLink(uri: '/post/create')}"><g:message code="default.aksQuestion.label" default="Ask Question"/></a></li>
+				<g:isLogged><li><form action="${createLink(controller: 'logout')}" method="POST"><input type="submit" value="${message(code:"default.logout.label", default:"Logout")}"></form></li></g:isLogged>
+				<g:isNotLogged><li><a href="${createLink(controller: 'login')}"><g:message code="default.login.label" default="Login"/></a></li></g:isNotLogged>
+				<g:isNotLogged><li><a href="${createLink(controller: "user", action:"create")}"><g:message code="default.signIn.label" default="Sign In"/></a></li></g:isNotLogged>
 			</ul>
 		</div>
 		<g:layoutBody/>
