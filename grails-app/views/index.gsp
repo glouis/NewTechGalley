@@ -82,8 +82,8 @@
 
 		<%@ page import="com.newtechgalley.UserController" contentType="text/html;charset=UTF-8" %>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'welcome.label', default: 'Welcome')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<g:set var="entityName" value="${message(code: 'default.siteName.label', default: 'Welcome to {0}')}" />
+		<title><g:message code="default.welcome.label" args="[entityName]" /></title>
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

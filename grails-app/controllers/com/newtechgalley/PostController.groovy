@@ -20,7 +20,8 @@ class PostController {
     }
 
     def create() {
-        respond new Post(params) //TODO: get the current user
+        params.user = getAuthenticatedUser()
+        respond new Post(params)
     }
 
     @Transactional
