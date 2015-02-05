@@ -8,6 +8,8 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class PostController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -20,7 +22,7 @@ class PostController {
     }
 
     def create() {
-        params.user = getAuthenticatedUser()
+        params.user = (User) springSecurityService.currentUser
         respond new Post(params)
     }
 

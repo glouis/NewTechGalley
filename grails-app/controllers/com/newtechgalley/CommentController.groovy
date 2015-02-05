@@ -8,6 +8,8 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class CommentController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -20,6 +22,7 @@ class CommentController {
     }
 
     def create() {
+        params.user = (User) springSecurityService.currentUser
         respond new Comment(params)
     }
 
