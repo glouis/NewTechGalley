@@ -21,11 +21,11 @@
 			<g:hasErrors bean="${userInstance}">
 			<ul class="errors" role="alert">
 				<g:eachError bean="${userInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:userInstance, action:'save']" >
+			<g:form id="createUserForm" url="[resource:userInstance, action:'save']" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
@@ -34,5 +34,31 @@
 				</fieldset>
 			</g:form>
 		</div>
+
+		<script type="text/javascript">
+			var passwordInput = $("#passwordInput");
+			var passwordConfirmInput = $("#passwordConfirmInput");
+			var form = $("#createUserForm");
+			passwordConfirmInput.keyup(function()
+				{
+					if(passwordConfirmInput.val() !== passwordInput.val())
+					{
+						passwordConfirmInput.parent().addClass("error");
+					}
+					else
+					{
+						passwordConfirmInput.parent().removeClass("error");
+					}
+				});
+			form.submit(function(e)
+				{
+					if(passwordInput.val() !== passwordConfirmInput.val())
+					{
+						e.preventDefault();
+						return false;
+					}
+					return true;
+				});
+		</script>
 	</body>
 </html>

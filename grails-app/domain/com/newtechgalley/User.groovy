@@ -20,7 +20,7 @@ class User {
 		username blank: false, unique: true
 		password blank: false
 		points nullable: true
-		mailAddress nullable: true
+		mailAddress nullable: true, email: true
 	}
 
 	static mapping = {

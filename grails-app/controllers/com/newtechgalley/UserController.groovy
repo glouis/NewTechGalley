@@ -21,7 +21,6 @@ class UserController {
 
     def create()
     {
-        //TODO : vérifier les params
         respond new User(params)
     }
 

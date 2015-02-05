@@ -7,7 +7,7 @@
 		<g:message code="user.username.label" default="Username" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="username" required="" value="${userInstance?.username}"/>
+	<g:field name="username" required="" value="${userInstance?.username}"/>
 
 </div>
 
@@ -16,7 +16,16 @@
 		<g:message code="user.password.label" default="Password" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="password" required="" value="${userInstance?.password}"/>
+	<g:passwordField id="passwordInput" name="password" required="" value="${userInstance?.password}"/>
+
+</div>
+
+<div class="fieldcontain">
+	<label for="passwordConfirm">
+		<g:message code="user.passwordConfirm.label" default="Confirm Password" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:passwordField id="passwordConfirmInput" name="passwordConfirm" required=""/>
 
 </div>
 
@@ -25,6 +34,5 @@
 		<g:message code="user.mailAddress.label" default="Mail Address" />
 		
 	</label>
-	<g:textField name="mailAddress" value="${userInstance?.mailAddress}"/>
-
+	<g:field type="mailAddress" name="mailAddress" value="${userInstance?.mailAddress}"/>
 </div>
