@@ -3,9 +3,9 @@ package com.newtechgalley
 class Post {
     String title
     String content
-    Date creationDate = new Date()
+    Date creationDate
     Date lastEditDate
-    int note = 0
+    int note
 
     User user
     static hasMany = [categories: Category, comments:Comment]
@@ -18,5 +18,10 @@ class Post {
         user nullable: false
         creationDate blank: false, nullable: false
         lastEditDate nullable: true
+    }
+
+    @Override
+    String toString() {
+        return title
     }
 }

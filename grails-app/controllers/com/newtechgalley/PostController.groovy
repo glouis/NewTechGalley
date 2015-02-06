@@ -18,6 +18,10 @@ class PostController {
     }
 
     def show(Post postInstance) {
+        if(postInstance == null)
+        {
+            render(status: 404)
+        }
         respond postInstance
     }
 
@@ -37,6 +41,9 @@ class PostController {
             respond postInstance.errors, view: 'create'
             return
         }
+
+        postInstance.creationDate = new Date()
+        postInstance.note = 0
 
         postInstance.save flush: true
 

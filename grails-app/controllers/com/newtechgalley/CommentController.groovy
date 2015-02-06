@@ -38,6 +38,9 @@ class CommentController {
             return
         }
 
+        commentInstance.creationDate = new Date()
+        commentInstance.note = 0
+
         commentInstance.save flush: true
 
         request.withFormat {

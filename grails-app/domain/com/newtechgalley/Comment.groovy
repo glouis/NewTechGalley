@@ -2,8 +2,8 @@ package com.newtechgalley
 
 class Comment {
     String content
-    int note = 0
-    Date creationDate = new Date()
+    int note
+    Date creationDate
     Date lastEditDate
 
     User user
@@ -14,5 +14,10 @@ class Comment {
         user nullable: false
         creationDate blank: false, nullable: false
         lastEditDate nullable: true
+    }
+
+    @Override
+    String toString() {
+        return content
     }
 }

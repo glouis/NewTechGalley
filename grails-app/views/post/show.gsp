@@ -18,48 +18,33 @@
     </g:if>
     <ol class="property-list post">
 
-        <g:if test="${postInstance?.title}">
-            <li class="fieldcontain">
-                <span id="title-label" class="property-label"><g:message code="post.title.label"
-                                                                         default="Title"/></span>
+        <li class="fieldcontain">
 
-                <span class="property-value" aria-labelledby="title-label"><g:fieldValue bean="${postInstance}"
-                                                                                         field="title"/></span>
+            <span class="property-label" aria-labelledby="user-label"><g:link controller="user" action="show"
+                                                                              id="${postInstance?.user?.id}">${postInstance?.user?.encodeAsHTML()}</g:link></span>
+            <span class="property-value" aria-labelledby="creationDate-label"><g:formatDate
+                    date="${postInstance?.creationDate}"/></span>
+            <span class="property-value" aria-labelledby="categories-label">
+                <g:each in="${postInstance.categories}" var="c">
+                    <g:link controller="category" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link>
+                </g:each>
+            </span>
+        </li>
 
-            </li>
-        </g:if>
 
-        <g:if test="${postInstance?.content}">
-            <li class="fieldcontain">
-                <span id="content-label" class="property-label"><g:message code="post.content.label"
-                                                                           default="Content"/></span>
+        <li class="fieldcontain">
+            <span class="property-label" aria-labelledby="note-label"><g:fieldValue bean="${postInstance}"
+                                                                                    field="note"/></span>
+            <span class="property-value" aria-labelledby="title-label"><g:fieldValue bean="${postInstance}"
+                                                                                     field="title"/></span>
 
-                <span class="property-value" aria-labelledby="content-label"><g:fieldValue bean="${postInstance}"
-                                                                                           field="content"/></span>
+        </li>
 
-            </li>
-        </g:if>
+        <li class="fieldcontain">
+            <span class="property-value" aria-labelledby="content-label"><g:fieldValue bean="${postInstance}"
+                                                                                       field="content"/></span>
+        </li>
 
-        <g:if test="${postInstance?.user}">
-            <li class="fieldcontain">
-                <span id="user-label" class="property-label"><g:message code="post.user.label" default="User"/></span>
-
-                <span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show"
-                                                                                  id="${postInstance?.user?.id}">${postInstance?.user?.encodeAsHTML()}</g:link></span>
-
-            </li>
-        </g:if>
-
-        <g:if test="${postInstance?.creationDate}">
-            <li class="fieldcontain">
-                <span id="creationDate-label" class="property-label"><g:message code="post.creationDate.label"
-                                                                                default="Creation Date"/></span>
-
-                <span class="property-value" aria-labelledby="creationDate-label"><g:formatDate
-                        date="${postInstance?.creationDate}"/></span>
-
-            </li>
-        </g:if>
 
         <g:if test="${postInstance?.lastEditDate}">
             <li class="fieldcontain">
@@ -72,62 +57,31 @@
             </li>
         </g:if>
 
-        <g:if test="${postInstance?.categories}">
-            <li class="fieldcontain">
-                <span id="categories-label" class="property-label"><g:message code="post.categories.label"
-                                                                              default="Categories"/></span>
-
-                <g:each in="${postInstance.categories}" var="c">
-                    <span class="property-value" aria-labelledby="categories-label"><g:link controller="category"
-                                                                                            action="show"
-                                                                                            id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-                </g:each>
-
-            </li>
-        </g:if>
-
         <g:if test="${postInstance?.comments}">
             <li class="fieldcontain">
                 <span id="comments-label" class="property-label"><g:message code="post.comments.label"
                                                                             default="Comments"/></span>
 
                 <g:each in="${postInstance.comments}" var="c">
-                    <span class="property-value" aria-labelledby="comments-label"><g:link controller="comment"
-                                                                                          action="show"
-                                                                                          id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+                    <blockquote class="property-value" aria-labelledby="comments-label">
+                        ${c?.encodeAsHTML()}
+                        <cite>
+                            <g:link controller="user" action="show" id="${c?.user.encodeAsHTML()}">${c?.user.encodeAsHTML()}</g:link>
+                            <g:fieldValue bean="${c}" field="creationDate"/>
+                        </cite>
+                    </blockquote>
                 </g:each>
 
             </li>
         </g:if>
 
-        <g:if test="${postInstance?.note}">
-            <li class="fieldcontain">
-                <span id="note-label" class="property-label"><g:message code="post.note.label" default="Note"/></span>
-
-                <span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${postInstance}"
-                                                                                        field="note"/></span>
-
-            </li>
-        </g:if>
-        <div class="fieldcontain ${hasErrors(bean: postInstance, field: 'comments', 'error')} ">
-            <label for="comments">
-                <g:message code="post.comments.label" default="Comments"/>
-
-            </label>
-
-            <ul class="one-to-many">
-                <g:each in="${postInstance?.comments ?}" var="c">
-                    <li><g:link controller="comment" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-                </g:each>
-            </ul>
+        <div class="fieldcontain">
             <span class="property-value">
                 <g:link controller="comment" action="create"
                         params="['post.id': postInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'comment.label', default: 'Comment')])}</g:link>
             </span>
         </div>
     </ol>
-
-
 
     <g:form url="[resource: postInstance, action: 'delete']" method="DELETE">
         <fieldset class="buttons">
