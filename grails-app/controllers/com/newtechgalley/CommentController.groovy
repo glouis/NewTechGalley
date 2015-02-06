@@ -23,6 +23,8 @@ class CommentController {
 
     def create() {
         params.user = (User) springSecurityService.currentUser
+        params.creationDate = new Date()
+
         respond new Comment(params)
     }
 
@@ -40,7 +42,7 @@ class CommentController {
 
         commentInstance.creationDate = new Date()
         commentInstance.note = 0
-
+        commentInstance.votes = new HashMap<String, VoteType>()
         commentInstance.save flush: true
 
         request.withFormat {
@@ -107,5 +109,55 @@ class CommentController {
             }
             '*' { render status: NOT_FOUND }
         }
+    }
+
+    @Secured(['ROLE_USER'])
+    def upvote() {
+        User user = (User) springSecurityService.currentUser
+
+        def idComment = Long.parseLong((String) params.id)
+        Comment c = Comment.get(idComment)
+
+        if(c.votes.get(user.id.toString())) // existing vote
+        {
+            if(c.votes.get(user.id.toString()) == VoteType.DOWNVOTE) // changing vote
+            {
+                c.votes.put(user.id.toString(), VoteType.UPVOTE)
+                c.note = c.note + 2
+            }
+        }
+        else // new vote
+        {
+            c.votes.put(user.id.toString(), VoteType.UPVOTE)
+            ++c.note
+        }
+
+        c.save(flush: true, failOnError: true)
+        redirect(controller: "post", action:"show", id:c.post.id)
+    }
+
+    @Secured(['ROLE_USER'])
+    def downvote() {
+        User user = (User) springSecurityService.currentUser
+
+        def idComment = Long.parseLong((String) params.id)
+        Comment c = Comment.get(idComment)
+
+        if(c.votes.get(user.id.toString())) // existing vote
+        {
+            if(c.votes.get(user.id.toString()) == VoteType.UPVOTE) // changing vote
+            {
+                c.votes.put(user.id.toString(), VoteType.DOWNVOTE)
+                c.note = c.note - 2
+            }
+        }
+        else // new vote
+        {
+            c.votes.put(user.id.toString(), VoteType.DOWNVOTE)
+            --c.note
+        }
+
+        c.save(flush: true, failOnError: true)
+        redirect(controller: "post", action:"show", id:c.post.id)
     }
 }

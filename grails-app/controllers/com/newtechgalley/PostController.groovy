@@ -27,6 +27,7 @@ class PostController {
 
     def create() {
         params.user = (User) springSecurityService.currentUser
+
         respond new Post(params)
     }
 
@@ -44,7 +45,7 @@ class PostController {
 
         postInstance.creationDate = new Date()
         postInstance.note = 0
-
+        postInstance.votes = new HashMap<String, VoteType>()
         postInstance.save flush: true
 
         request.withFormat {
@@ -111,5 +112,55 @@ class PostController {
             }
             '*' { render status: NOT_FOUND }
         }
+    }
+
+    @Secured(['ROLE_USER'])
+    def upvote() {
+        User user = (User) springSecurityService.currentUser
+
+        long idPost = Long.parseLong((String) params.id)
+        Post p = Post.get(idPost)
+
+        if(p.votes.get(user.id.toString())) // existing vote
+        {
+            if(p.votes.get(user.id.toString()) == VoteType.DOWNVOTE) // changing vote
+            {
+                p.votes.put(user.id.toString(), VoteType.UPVOTE)
+                p.note = p.note + 2
+            }
+        }
+        else // new vote
+        {
+            p.votes.put(user.id.toString(), VoteType.UPVOTE)
+            ++p.note
+        }
+
+        p.save(flush: true, failOnError: true)
+        redirect(controller: "post", action:"show", id:p.id)
+    }
+
+    @Secured(['ROLE_USER'])
+    def downvote() {
+        User user = (User) springSecurityService.currentUser
+
+        def idPost = Long.parseLong((String) params.id)
+        Post p = Post.get(idPost)
+
+        if(p.votes.get(user.id.toString())) // existing vote
+        {
+            if(p.votes.get(user.id.toString()) == VoteType.UPVOTE) // changing vote
+            {
+                p.votes.put(user.id.toString(), VoteType.DOWNVOTE)
+                p.note = p.note - 2
+            }
+        }
+        else // new vote
+        {
+            p.votes.put(user.id.toString(), VoteType.DOWNVOTE)
+            --p.note
+        }
+
+        p.save(flush: true, failOnError: true)
+        redirect(controller: "post", action:"show", id:p.id)
     }
 }

@@ -22,8 +22,8 @@
 
             <span class="property-label" aria-labelledby="user-label"><g:link controller="user" action="show"
                                                                               id="${postInstance?.user?.id}">${postInstance?.user?.encodeAsHTML()}</g:link></span>
-            <span class="property-value" aria-labelledby="creationDate-label"><g:formatDate
-                    date="${postInstance?.creationDate}"/></span>
+            <span class="property-value" aria-labelledby="creationDate-label"><g:formatDate type="MEDIUM"
+                                                                                            date="${postInstance?.creationDate}"/></span>
             <span class="property-value" aria-labelledby="categories-label">
                 <g:each in="${postInstance.categories}" var="c">
                     <g:link controller="category" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link>
@@ -33,8 +33,13 @@
 
 
         <li class="fieldcontain">
-            <span class="property-label" aria-labelledby="note-label"><g:fieldValue bean="${postInstance}"
-                                                                                    field="note"/></span>
+            <div class="property-label">
+                <div class="voter">
+                    <g:link class="upvote" controller="post" action="upvote" id="${postInstance?.id}"/>
+                    <span aria-labelledby="note-label"><g:fieldValue bean="${postInstance}" field="note"/></span>
+                    <g:link class="downvote" controller="post" action="downvote" id="${postInstance?.id}"/>
+                </div>
+            </div>
             <span class="property-value" aria-labelledby="title-label"><g:fieldValue bean="${postInstance}"
                                                                                      field="title"/></span>
 
@@ -59,15 +64,24 @@
 
         <g:if test="${postInstance?.comments}">
             <li class="fieldcontain">
-                <span id="comments-label" class="property-label"><g:message code="post.comments.label"
-                                                                            default="Comments"/></span>
+                <span id="comments-label" class="property-label"><g:message code="post.comments.label" default="Comments"/></span>
+            </li>
+            <li class="fieldcontain">
 
-                <g:each in="${postInstance.comments}" var="c">
+                <g:each in="${postInstance.comments.sort { a,b -> ((b.note <=> a.note) ?: (a.creationDate <=> b.creationDate)) }}" var="c">
+                    <div class="property-label">
+                        <div class="voter">
+                            <g:link class="upvote" controller="comment" action="upvote" id="${c?.id}"/>
+                            <span aria-labelledby="note-label"><g:fieldValue bean="${c}" field="note"/></span>
+                            <g:link class="downvote" controller="comment" action="downvote" id="${c?.id}"/>
+                        </div>
+                    </div>
                     <blockquote class="property-value" aria-labelledby="comments-label">
                         ${c?.encodeAsHTML()}
                         <cite>
-                            <g:link controller="user" action="show" id="${c?.user.encodeAsHTML()}">${c?.user.encodeAsHTML()}</g:link>
-                            <g:fieldValue bean="${c}" field="creationDate"/>
+                            <g:link controller="user" action="show"
+                                    id="${c?.user.encodeAsHTML()}">${c?.user.encodeAsHTML()}</g:link>
+                            <g:formatDate type="MEDIUM" date="${c?.creationDate}"/>
                         </cite>
                     </blockquote>
                 </g:each>

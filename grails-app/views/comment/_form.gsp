@@ -11,7 +11,7 @@
 		<g:message code="comment.content.label" default="Content" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="content" required="" value="${commentInstance?.content}"/>
+	<g:textArea name="content" required="" value="${commentInstance?.content}"/>
 
 </div>
 
