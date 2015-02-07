@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
@@ -54,8 +55,18 @@ class CommentController {
         }
     }
 
+    @Secured(['ROLE_USER'])
     def edit(Comment commentInstance) {
-        respond commentInstance
+
+        if(commentInstance.user.id == ((User) springSecurityService.currentUser).id
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            respond commentInstance
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
+        }
     }
 
     @Transactional
@@ -75,7 +86,7 @@ class CommentController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Comment.label', default: 'Comment'), commentInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'comment.label', default: 'Comment'), commentInstance.id])
                 redirect commentInstance
             }
             '*' { respond commentInstance, [status: OK] }
@@ -83,22 +94,36 @@ class CommentController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
-    def delete(Comment commentInstance) {
-
-        if (commentInstance == null) {
-            notFound()
-            return
-        }
-
-        commentInstance.delete flush: true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Comment.label', default: 'Comment'), commentInstance.id])
-                redirect action: "index", method: "GET"
+    @Secured(['ROLE_USER'])
+    def delete(Comment commentInstance)
+    {
+        if(commentInstance.user.id == ((User) springSecurityService.currentUser).id
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            if (commentInstance == null) {
+                notFound()
+                return
             }
-            '*' { render status: NO_CONTENT }
+
+            Post post = commentInstance.post
+            post.removeFromComments(commentInstance)
+            post.save(flush: false)
+
+            commentInstance.save(flush: true)
+
+            commentInstance.delete flush: true
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.deleted.message', args: [message(code: 'comment.label', default: 'Comment'), commentInstance.id])
+                    redirect action: "index", method: "GET"
+                }
+                '*' { render status: NO_CONTENT }
+            }
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
         }
     }
 

@@ -89,7 +89,7 @@ class PostController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Post.label', default: 'Post'), postInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
                 redirect postInstance
             }
             '*' { respond postInstance, [status: OK] }
@@ -97,22 +97,30 @@ class PostController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
-    def delete(Post postInstance) {
-
-        if (postInstance == null) {
-            notFound()
-            return
-        }
-
-        postInstance.delete flush: true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Post.label', default: 'Post'), postInstance.id])
-                redirect action: "index", method: "GET"
+    @Secured(['ROLE_USER'])
+    def delete(Post postInstance)
+    {
+        if(postInstance.user.id == ((User) springSecurityService.currentUser).id
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            if (postInstance == null) {
+                notFound()
+                return
             }
-            '*' { render status: NO_CONTENT }
+
+            postInstance.delete flush: true
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.deleted.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                    redirect action: "index", method: "GET"
+                }
+                '*' { render status: NO_CONTENT }
+            }
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
         }
     }
 

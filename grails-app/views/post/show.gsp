@@ -52,7 +52,8 @@
             <sec:ifLoggedIn>
                 <g:if test="${postInstance?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
                     <g:form class="property-value" url="[resource: postInstance, action: 'edit']">
-                        <input class="shortBtn" type="submit" value="${message(code: "default.edit.label", default: "Edit")}"/>
+                        <input class="shortBtn" type="submit"
+                               value="${message(code: "default.edit.label", default: "Edit")}"/>
                     </g:form>
                 </g:if>
             </sec:ifLoggedIn>
@@ -61,20 +62,24 @@
         <g:if test="${postInstance?.lastEditDate}">
             <small>
                 <li class="fieldcontain">
-                    <span class="property-label"><g:message code="post.lastEditDate.label" default="Last Edit Date"/></span>
+                    <span class="property-label"><g:message code="post.lastEditDate.label"
+                                                            default="Last Edit Date"/></span>
 
-                    <span class="property-value" aria-labelledby="lastEditDate-label"><g:formatDate date="${postInstance?.lastEditDate}"/></span>
+                    <span class="property-value" aria-labelledby="lastEditDate-label"><g:formatDate
+                            date="${postInstance?.lastEditDate}"/></span>
                 </li>
             </small>
         </g:if>
 
         <g:if test="${postInstance?.comments}">
             <li class="fieldcontain">
-                <span id="comments-label" class="property-label"><g:message code="post.comments.label" default="Comments"/></span>
+                <span id="comments-label" class="property-label"><g:message code="post.comments.label"
+                                                                            default="Comments"/></span>
             </li>
             <li class="fieldcontain">
 
-                <g:each in="${postInstance.comments.sort { a,b -> ((b.note <=> a.note) ?: (a.creationDate <=> b.creationDate)) }}" var="c">
+                <g:each in="${postInstance.comments.sort { a, b -> ((b.note <=> a.note) ?: (a.creationDate <=> b.creationDate)) }}"
+                        var="c">
                     <div class="property-label">
                         <div class="voter">
                             <g:link class="upvote" controller="comment" action="upvote" id="${c?.id}"/>
@@ -82,22 +87,29 @@
                             <g:link class="downvote" controller="comment" action="downvote" id="${c?.id}"/>
                         </div>
                     </div>
-                    <blockquote class="property-value" aria-labelledby="comments-label"> ${c?.encodeAsHTML()}
+                    <blockquote class="property-value" aria-labelledby="comments-label">${c?.encodeAsHTML()}
                         <cite>
                             <g:link controller="user" action="show"
                                     id="${c?.user.encodeAsHTML()}">${c?.user.encodeAsHTML()}</g:link>
                             <g:formatDate type="MEDIUM" date="${c?.creationDate}"/>
                             <g:if test="${c?.lastEditDate}">
                                 <small>
-                                    <span id="lastEditDate-label"> - <g:message code="comment.lastEditDateShort.label" default="Modified"/></span>
+                                    <span id="lastEditDate-label">- <g:message code="comment.lastEditDateShort.label"
+                                                                               default="Modified"/></span>
                                     <g:formatDate type="MEDIUM" date="${c?.lastEditDate}"/>
                                 </small>
                             </g:if>
                         </cite>
-                       <sec:ifLoggedIn>
+                        <sec:ifLoggedIn>
                             <g:if test="${c?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
+                                <g:form url="[resource: c, action: 'delete']" method="DELETE">
+                                    <g:actionSubmit class="shortBtn" action="delete"
+                                                    value="${message(code: 'default.delete.label', default: 'Delete')}"
+                                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                                </g:form>
                                 <g:form url="[resource: c, action: 'edit']">
-                                    <input class="shortBtn" type="submit" value="${message(code: "default.edit.label", default: "Edit")}"/>
+                                    <input class="shortBtn" type="submit"
+                                           value="${message(code: "default.edit.label", default: "Edit")}"/>
                                 </g:form>
                             </g:if>
                         </sec:ifLoggedIn>
