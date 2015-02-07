@@ -1,4 +1,4 @@
-<%@ page import="com.newtechgalley.Post" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; com.newtechgalley.Post" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,8 +48,15 @@
         <li class="fieldcontain">
             <span class="property-value" aria-labelledby="content-label"><g:fieldValue bean="${postInstance}"
                                                                                        field="content"/></span>
-        </li>
 
+            <sec:ifLoggedIn>
+                <g:if test="${postInstance?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
+                    <g:form class="property-value" url="[resource: postInstance, action: 'edit']">
+                        <input class="shortBtn" type="submit" value="${message(code: "default.edit.label", default: "Edit")}"/>
+                    </g:form>
+                </g:if>
+            </sec:ifLoggedIn>
+        </li>
 
         <g:if test="${postInstance?.lastEditDate}">
             <li class="fieldcontain">
@@ -76,13 +83,19 @@
                             <g:link class="downvote" controller="comment" action="downvote" id="${c?.id}"/>
                         </div>
                     </div>
-                    <blockquote class="property-value" aria-labelledby="comments-label">
-                        ${c?.encodeAsHTML()}
+                    <blockquote class="property-value" aria-labelledby="comments-label"> ${c?.encodeAsHTML()}
                         <cite>
                             <g:link controller="user" action="show"
                                     id="${c?.user.encodeAsHTML()}">${c?.user.encodeAsHTML()}</g:link>
                             <g:formatDate type="MEDIUM" date="${c?.creationDate}"/>
                         </cite>
+                       <sec:ifLoggedIn>
+                            <g:if test="${c?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
+                                <g:form url="[resource: c, action: 'edit']">
+                                    <input class="shortBtn" type="submit" value="${message(code: "default.edit.label", default: "Edit")}"/>
+                                </g:form>
+                            </g:if>
+                        </sec:ifLoggedIn>
                     </blockquote>
                 </g:each>
 

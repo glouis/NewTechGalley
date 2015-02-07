@@ -27,7 +27,6 @@
 <div class="fieldcontain ${hasErrors(bean: postInstance, field: 'categories', 'error')} ">
 	<label for="categories">
 		<g:message code="post.categories.label" default="Categories" />
-		
 	</label>
 	<g:select name="categories" from="${com.newtechgalley.Category.list()}" multiple="multiple" optionKey="id" size="5" value="${postInstance?.categories*.id}" class="many-to-many"/>
 

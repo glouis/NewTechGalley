@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
@@ -57,8 +58,18 @@ class PostController {
         }
     }
 
-    def edit(Post postInstance) {
-        respond postInstance
+    @Secured(['ROLE_USER'])
+    def edit(Post postInstance)
+    {
+        if(postInstance.user.id == ((User) springSecurityService.currentUser).id
+            || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            respond postInstance
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
+        }
     }
 
     @Transactional

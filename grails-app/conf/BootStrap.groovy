@@ -33,6 +33,7 @@ class BootStrap {
         categoryCSharp.save(flush: true)
 
         UserRole.create testUser, adminRole, true
+        UserRole.create testUser, userRole, true
         UserRole.create lambdaUser, userRole, true
         UserRole.create lambdaUser2, userRole, true
 

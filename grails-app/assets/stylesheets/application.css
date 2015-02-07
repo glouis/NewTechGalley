@@ -188,3 +188,12 @@ blockquote cite
     top: 0;
     margin-left: -2.5em;
 }
+
+.shortBtn
+{
+    margin-left: 0px;
+    padding: 0.1px;
+    height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+}
