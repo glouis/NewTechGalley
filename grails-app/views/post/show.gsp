@@ -59,14 +59,13 @@
         </li>
 
         <g:if test="${postInstance?.lastEditDate}">
-            <li class="fieldcontain">
-                <span id="lastEditDate-label" class="property-label"><g:message code="post.lastEditDate.label"
-                                                                                default="Last Edit Date"/></span>
+            <small>
+                <li class="fieldcontain">
+                    <span class="property-label"><g:message code="post.lastEditDate.label" default="Last Edit Date"/></span>
 
-                <span class="property-value" aria-labelledby="lastEditDate-label"><g:formatDate
-                        date="${postInstance?.lastEditDate}"/></span>
-
-            </li>
+                    <span class="property-value" aria-labelledby="lastEditDate-label"><g:formatDate date="${postInstance?.lastEditDate}"/></span>
+                </li>
+            </small>
         </g:if>
 
         <g:if test="${postInstance?.comments}">
@@ -88,6 +87,12 @@
                             <g:link controller="user" action="show"
                                     id="${c?.user.encodeAsHTML()}">${c?.user.encodeAsHTML()}</g:link>
                             <g:formatDate type="MEDIUM" date="${c?.creationDate}"/>
+                            <g:if test="${c?.lastEditDate}">
+                                <small>
+                                    <span id="lastEditDate-label"> - <g:message code="comment.lastEditDateShort.label" default="Modified"/></span>
+                                    <g:formatDate type="MEDIUM" date="${c?.lastEditDate}"/>
+                                </small>
+                            </g:if>
                         </cite>
                        <sec:ifLoggedIn>
                             <g:if test="${c?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">

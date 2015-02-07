@@ -70,6 +70,7 @@ class CommentController {
             return
         }
 
+        commentInstance.lastEditDate = new Date()
         commentInstance.save flush: true
 
         request.withFormat {

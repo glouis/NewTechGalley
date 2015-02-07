@@ -84,6 +84,7 @@ class PostController {
             return
         }
 
+        postInstance.lastEditDate = new Date()
         postInstance.save flush: true
 
         request.withFormat {
