@@ -49,7 +49,7 @@ class BootStrap {
 
         assert User.count() == 3
         assert Role.count() == 2
-        assert UserRole.count() == 3
+        assert UserRole.count() == 4
         assert Post.count() == 2
         assert Comment.count() == 2
         assert Category.count() == 6
