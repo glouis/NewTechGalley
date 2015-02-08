@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
@@ -7,6 +8,8 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class BadgeController {
+
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -21,7 +24,8 @@ class BadgeController {
 
     @Secured(['ROLE_ADMIN'])
     def create() {
-        respond new Badge(params)
+        Badge b = new Badge(params)
+        respond b
     }
 
     @Transactional
@@ -38,6 +42,8 @@ class BadgeController {
         }
 
         badgeInstance.save flush: true
+
+        log.info 'Badge '+ badgeInstance.id + ' created by administrator with id ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {
@@ -68,6 +74,8 @@ class BadgeController {
 
         badgeInstance.save flush: true
 
+        log.info 'Badge '+ badgeInstance.id + ' updated by administrator with id ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Badge.label', default: 'Badge'), badgeInstance.id])
@@ -86,7 +94,11 @@ class BadgeController {
             return
         }
 
+        long bId = badgeInstance.id
+
         badgeInstance.delete flush: true
+
+        log.info 'Badge '+ bId + ' deleted by administrator with id ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {

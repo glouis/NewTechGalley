@@ -41,6 +41,8 @@ class UserController {
 
         userInstance.save flush:true
 
+        log.info 'User '+ userInstance.id + ' created'
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
@@ -77,6 +79,8 @@ class UserController {
 
         userInstance.save flush:true
 
+        log.info 'User '+ userInstance.id + ' updated by ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
@@ -95,7 +99,11 @@ class UserController {
             return
         }
 
+        long uId = userInstance.id
+
         userInstance.delete flush:true
+
+        log.info 'User '+ uId + ' deleted by ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {
