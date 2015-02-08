@@ -13,6 +13,8 @@ class User {
 	int points
 	String mailAddress
 
+	List<Set<Date, String>> actionList
+
 	static transients = ['springSecurityService']
 	static hasMany = [badges: Badge]
 	
@@ -21,6 +23,7 @@ class User {
 		password blank: false
 		points nullable: true
 		mailAddress nullable: true, email: true
+		actionList nullable: true, blank: true
 	}
 
 	static mapping = {

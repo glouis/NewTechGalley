@@ -26,8 +26,10 @@ class CommentController {
 
     @Secured(['ROLE_USER'])
     def create() {
-        params.user = (User) springSecurityService.currentUser
+        def currentUser = (User) springSecurityService.currentUser
+        params.user = currentUser
         params.creationDate = new Date()
+        currentUser.actionList.add(new Date(), "comment")
 
         Comment c = new Comment(params)
 

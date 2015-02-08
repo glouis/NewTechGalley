@@ -39,7 +39,7 @@
 				<li class="fieldcontain">
 					<span id="mailAddress-label" class="property-label"><g:message code="user.mailAddress.label" default="Mail Address" /></span>
 					
-						<span class="property-value" aria-labelledby="mailAddress-label"><g:fieldValue bean="${userInstance}" field="mailAddress"/></span>
+						<li class="property-value" aria-labelledby="mailAddress-label"><g:fieldValue bean="${userInstance}" field="mailAddress"/></li>
 					
 				</li>
 				</g:if>
@@ -88,6 +88,18 @@
 					
 						<span class="property-value" aria-labelledby="passwordExpired-label"><g:formatBoolean boolean="${userInstance?.passwordExpired}" /></span>
 					
+				</li>
+				</g:if>
+
+				<g:if test="${userInstance?.actionList}">
+				<li class="fieldcontain">
+					<span id="actionList-label" class="property-label"><g:message code="user.actionList.label" /></span>
+					<g:each var="action" in="${userInstance.actionList}">
+						<li class="fieldcontain">
+							<span id="action-label" class="property-label"><g:message code="user.action.label"/></span>
+							<span class="property-value" aria-labelledby="action-label"><g:textArea name="${action}"></g:textArea></span>
+						</li>
+					</g:each>
 				</li>
 				</g:if>
 			

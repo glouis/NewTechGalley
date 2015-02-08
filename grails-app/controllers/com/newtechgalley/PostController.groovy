@@ -28,7 +28,9 @@ class PostController {
 
     @Secured(['ROLE_USER'])
     def create() {
-        params.user = (User) springSecurityService.currentUser
+        def currentUser = (User) springSecurityService.currentUser
+        params.user = currentUser
+        currentUser.actionList.add(new Date(), params.title)
 
         respond new Post(params)
     }
