@@ -24,6 +24,13 @@
                                                                               id="${postInstance?.user?.id}">${postInstance?.user?.encodeAsHTML()}</g:link></span>
             <span class="property-value" aria-labelledby="creationDate-label"><g:formatDate type="MEDIUM"
                                                                                             date="${postInstance?.creationDate}"/></span>
+
+            <g:if test="${postInstance?.validated == true}">
+                <span class="property-label"><g:message code="post.validated.label" default="Validated"/></span>
+            </g:if>
+            <g:else>
+                <span class="property-label"><g:message code="post.unvalidated.label" default="Unvalidated"/></span>
+            </g:else>
             <span class="property-value" aria-labelledby="categories-label">
                 <g:each in="${postInstance.categories}" var="c">
                     <g:link controller="category" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link>
@@ -55,6 +62,19 @@
                         <input class="shortBtn" type="submit"
                                value="${message(code: "default.button.edit.label", default: "Edit")}"/>
                     </g:form>
+                    <g:if test="${postInstance?.validated == true}">
+                        <g:form class="property-value" url="[resource: postInstance, action: 'un_validate']">
+                            <input class="shortBtn" type="submit"
+                                   value="${message(code: "post.button.unvalidate.label", default: "Mark as unanswered")}"/>
+                        </g:form>
+                    </g:if>
+                    <g:else>
+                        <g:form class="property-value" url="[resource: postInstance, action: 'un_validate']">
+                            <input class="shortBtn" type="submit"
+                                   value="${message(code: "post.button.validate.label", default: "Mark as answered")}"/>
+                        </g:form>
+                    </g:else>
+
                 </g:if>
             </sec:ifLoggedIn>
         </li>
