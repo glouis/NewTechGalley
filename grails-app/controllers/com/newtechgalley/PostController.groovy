@@ -50,6 +50,7 @@ class PostController {
 
         postInstance.creationDate = new Date()
         postInstance.note = 0
+        postInstance.validated = false
         postInstance.votes = new HashMap<String, VoteType>()
 
         postInstance.save flush: true
@@ -205,5 +206,51 @@ class PostController {
         log.info 'Post '+ p.id + ' downvoted by ' + ((User) springSecurityService.currentUser).id
 
         redirect(controller: "post", action:"show", id:p.id)
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER'])
+    def un_validate(Post postInstance)
+    {
+        if(postInstance.user.id == ((User) springSecurityService.currentUser).id
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            if (postInstance == null) {
+                notFound()
+                return
+            }
+
+            long pId = postInstance.id
+
+            postInstance.validated = !postInstance.validated
+            postInstance.save flush: true
+
+            if(postInstance.validated) {
+                log.info 'Post ' + pId + ' validate by user ' + ((User) springSecurityService.currentUser).id
+
+                request.withFormat {
+                    form multipartForm {
+                        flash.message = message(code: 'default.validated.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                        redirect(postInstance)
+                    }
+                    '*' { render status: NO_CONTENT }
+                }
+            }
+            else {
+                log.info 'Post ' + pId + ' unvalidate by user ' + ((User) springSecurityService.currentUser).id
+
+                request.withFormat {
+                    form multipartForm {
+                        flash.message = message(code: 'default.unvalidated.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                        redirect(postInstance)
+                    }
+                    '*' { render status: NO_CONTENT }
+                }
+            }
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
+        }
     }
 }
