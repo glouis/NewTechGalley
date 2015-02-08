@@ -15,6 +15,10 @@ class PostSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
+    void "test toString"() {
+        User user = new User(username: "Name", password: "Mdp")
+        Post post = new Comment(title: "Test", content: "Content", user: user)
+        expect:
+        comment.toString() == "Test"
     }
 }

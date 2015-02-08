@@ -29,6 +29,7 @@ class PostController {
     @Secured(['ROLE_USER'])
     def create() {
         params.user = (User) springSecurityService.currentUser
+        params.date = new Date()
 
         respond new Post(params)
     }
@@ -55,7 +56,7 @@ class PostController {
 
         log.info 'Post '+ postInstance.id + ' created by user ' + user.id
 
-        user.actionList.put((new Date().toString()), "Post: " + commentInstance.content)
+        user.actionList.put((new Date().toString()), "Post: " + postInstance.content)
         user.save(flush: true)
 
         request.withFormat {

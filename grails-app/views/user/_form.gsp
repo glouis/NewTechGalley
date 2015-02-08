@@ -12,6 +12,7 @@
 </div>
 </g:if>
 <g:else>
+	<g:hiddenField name="username" required="" value="${userInstance?.username}"/>
 	<g:if test="${userInstance?.username}">
 		<div class="fieldcontain">
 			<span id="username-label" class="property-label"><g:message code="user.username.label" default="Username" /></span>

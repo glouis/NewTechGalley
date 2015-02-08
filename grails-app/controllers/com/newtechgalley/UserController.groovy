@@ -67,7 +67,6 @@ class UserController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
     def update(User userInstance) {
         if (userInstance == null) {
             notFound()
@@ -93,7 +92,6 @@ class UserController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
     def delete(User userInstance) {
 
         if (userInstance == null) {

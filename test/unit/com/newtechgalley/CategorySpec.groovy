@@ -15,6 +15,9 @@ class CategorySpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
+    void "test toString"() {
+        Category category = new Category(username: "Test")
+        expect:
+        category.toString() == "Test"
     }
 }

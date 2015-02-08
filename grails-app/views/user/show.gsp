@@ -96,8 +96,7 @@
 					<span id="actionList-label" class="property-label"><g:message code="user.actionList.label" /></span>
 					<g:each var="action" in="${userInstance.actionList}">
 						<li class="fieldcontain">
-							<span id="action-label" class="property-label"><g:message code="user.action.label"/></span>
-							<span class="property-value" aria-labelledby="action-label"><g:textArea name="${action}"></g:textArea></span>
+							<span class="property-value" aria-labelledby="action-label"><g:message message="${action.key + " : " + action.value}"/></span>
 						</li>
 					</g:each>
 				</li>
