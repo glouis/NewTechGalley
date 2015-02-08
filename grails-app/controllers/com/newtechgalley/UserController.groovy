@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
@@ -7,6 +8,8 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
+
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -47,9 +50,16 @@ class UserController {
         }
     }
 
-    @Secured(['ROLE_ADMIN'])
     def edit(User userInstance) {
-        respond userInstance
+        if(userInstance.id == ((User) springSecurityService.currentUser).id
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            respond userInstance
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
+        }
     }
 
     @Transactional

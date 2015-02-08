@@ -53,7 +53,7 @@
                 <g:if test="${postInstance?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
                     <g:form class="property-value" url="[resource: postInstance, action: 'edit']">
                         <input class="shortBtn" type="submit"
-                               value="${message(code: "default.edit.label", default: "Edit")}"/>
+                               value="${message(code: "default.button.edit.label", default: "Edit")}"/>
                     </g:form>
                 </g:if>
             </sec:ifLoggedIn>
@@ -104,12 +104,12 @@
                             <g:if test="${c?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
                                 <g:form url="[resource: c, action: 'delete']" method="DELETE">
                                     <g:actionSubmit class="shortBtn" action="delete"
-                                                    value="${message(code: 'default.delete.label', default: 'Delete')}"
-                                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                                                    value="${message(code: 'default.button.delete.label')}"
+                                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message')}');"/>
                                 </g:form>
                                 <g:form url="[resource: c, action: 'edit']">
                                     <input class="shortBtn" type="submit"
-                                           value="${message(code: "default.edit.label", default: "Edit")}"/>
+                                           value="${message(code: "default.button.edit.label")}"/>
                                 </g:form>
                             </g:if>
                         </sec:ifLoggedIn>

@@ -1,7 +1,7 @@
 <%@ page import="com.newtechgalley.User" %>
 
 
-
+<g:if test="${request.getRequestURI().contains("create")}">
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'username', 'error')} required">
 	<label for="username">
 		<g:message code="user.username.label" default="Username" />
@@ -10,6 +10,17 @@
 	<g:field name="username" required="" value="${userInstance?.username}"/>
 
 </div>
+</g:if>
+<g:else>
+	<g:if test="${userInstance?.username}">
+		<div class="fieldcontain">
+			<span id="username-label" class="property-label"><g:message code="user.username.label" default="Username" /></span>
+
+			<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${userInstance}" field="username"/></span>
+
+		</div>
+	</g:if>
+</g:else>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
 	<label for="password">
