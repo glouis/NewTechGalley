@@ -24,10 +24,8 @@ class CommentController {
 
     @Secured(['ROLE_USER'])
     def create() {
-        def currentUser = (User) springSecurityService.currentUser
-        params.user = currentUser
+        params.user = (User) springSecurityService.currentUser
         params.creationDate = new Date()
-        currentUser.actionList.add(new Date(), "comment")
 
         Comment c = new Comment(params)
 
@@ -47,12 +45,17 @@ class CommentController {
             return
         }
 
+        User user = (User) springSecurityService.currentUser
+
         commentInstance.creationDate = new Date()
         commentInstance.note = 0
         commentInstance.votes = new HashMap<String, VoteType>()
         commentInstance.save flush: true
 
-        log.info 'Comment '+ commentInstance.id + ' created by user ' + ((User) springSecurityService.currentUser).id
+        log.info 'Comment '+ commentInstance.id + ' created by user ' + user.id
+
+        user.actionList.put((new Date().toString()), "Comment: " + commentInstance.content)
+        user.save(flush: true)
 
         request.withFormat {
             form multipartForm {

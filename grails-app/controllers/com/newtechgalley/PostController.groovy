@@ -28,9 +28,7 @@ class PostController {
 
     @Secured(['ROLE_USER'])
     def create() {
-        def currentUser = (User) springSecurityService.currentUser
-        params.user = currentUser
-        currentUser.actionList.add(new Date(), params.title)
+        params.user = (User) springSecurityService.currentUser
 
         respond new Post(params)
     }
@@ -47,13 +45,18 @@ class PostController {
             return
         }
 
+        User user = (User) springSecurityService.currentUser
+
         postInstance.creationDate = new Date()
         postInstance.note = 0
         postInstance.votes = new HashMap<String, VoteType>()
 
         postInstance.save flush: true
 
-        log.info 'Post '+ postInstance.id + ' created by user ' + ((User) springSecurityService.currentUser).id
+        log.info 'Post '+ postInstance.id + ' created by user ' + user.id
+
+        user.actionList.put((new Date().toString()), "Post: " + commentInstance.content)
+        user.save(flush: true)
 
         request.withFormat {
             form multipartForm {

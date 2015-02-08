@@ -39,6 +39,8 @@ class UserController {
             return
         }
 
+        userInstance.actionList = new HashMap<String, String>()
+
         userInstance.save flush:true
 
         log.info 'User '+ userInstance.id + ' created'
