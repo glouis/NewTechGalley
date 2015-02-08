@@ -20,11 +20,13 @@ class RoleController {
         respond roleInstance
     }
 
+    @Secured(['ROLE_ADMIN'])
     def create() {
         respond new Role(params)
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def save(Role roleInstance) {
         if (roleInstance == null) {
             notFound()
@@ -47,11 +49,13 @@ class RoleController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def edit(Role roleInstance) {
         respond roleInstance
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def update(Role roleInstance) {
         if (roleInstance == null) {
             notFound()
@@ -75,6 +79,7 @@ class RoleController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def delete(Role roleInstance) {
 
         if (roleInstance == null) {

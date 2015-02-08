@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -18,11 +19,13 @@ class CategoryController {
         respond categoryInstance
     }
 
+    @Secured(['ROLE_ADMIN'])
     def create() {
         respond new Category(params)
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def save(Category categoryInstance) {
         if (categoryInstance == null) {
             notFound()
@@ -45,11 +48,13 @@ class CategoryController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def edit(Category categoryInstance) {
         respond categoryInstance
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def update(Category categoryInstance) {
         if (categoryInstance == null) {
             notFound()
@@ -73,6 +78,7 @@ class CategoryController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def delete(Category categoryInstance) {
 
         if (categoryInstance == null) {

@@ -53,6 +53,7 @@ class UserController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def update(User userInstance) {
         if (userInstance == null) {
             notFound()

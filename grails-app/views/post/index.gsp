@@ -52,9 +52,6 @@
 				</g:each>
 				</tbody>
 			</table>
-			<div class="pagination">
-				<g:paginate total="${postInstanceCount ?: 0}" />
-			</div>
 		</div>
 	</body>
 </html>

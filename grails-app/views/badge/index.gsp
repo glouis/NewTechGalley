@@ -1,5 +1,5 @@
 
-<%@ page import="com.newtechgalley.Badge" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; com.newtechgalley.Badge" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -37,9 +37,13 @@
 				</g:each>
 				</tbody>
 			</table>
-			<div class="pagination">
-				<g:paginate total="${badgeInstanceCount ?: 0}" />
-			</div>
 		</div>
+		<g:if test="${SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
+			<div class="nav" role="navigation">
+				<ul>
+					<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]"/></g:link></li>
+				</ul>
+			</div>
+		</g:if>
 	</body>
 </html>

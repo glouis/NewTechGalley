@@ -26,6 +26,7 @@ class PostController {
         respond postInstance
     }
 
+    @Secured(['ROLE_USER'])
     def create() {
         params.user = (User) springSecurityService.currentUser
 
@@ -73,6 +74,7 @@ class PostController {
     }
 
     @Transactional
+    @Secured(['ROLE_USER'])
     def update(Post postInstance) {
         if (postInstance == null) {
             notFound()

@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -18,11 +19,13 @@ class BadgeController {
         respond badgeInstance
     }
 
+    @Secured(['ROLE_ADMIN'])
     def create() {
         respond new Badge(params)
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def save(Badge badgeInstance) {
         if (badgeInstance == null) {
             notFound()
@@ -45,11 +48,13 @@ class BadgeController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def edit(Badge badgeInstance) {
         respond badgeInstance
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def update(Badge badgeInstance) {
         if (badgeInstance == null) {
             notFound()
@@ -73,6 +78,7 @@ class BadgeController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def delete(Badge badgeInstance) {
 
         if (badgeInstance == null) {
