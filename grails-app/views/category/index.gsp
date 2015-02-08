@@ -1,5 +1,5 @@
 
-<%@ page import="com.newtechgalley.Category" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; com.newtechgalley.Category" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,26 +16,29 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<table>
-			<thead>
+				<thead>
 					<tr>
-					
+
 						<g:sortableColumn property="name" title="${message(code: 'category.name.label', default: 'Name')}" />
-					
+
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${categoryInstanceList}" status="i" var="categoryInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
 						<td><g:link action="show" id="${categoryInstance.id}">${fieldValue(bean: categoryInstance, field: "name")}</g:link></td>
-					
+
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
-			<div class="pagination">
-				<g:paginate total="${categoryInstanceCount ?: 0}" />
-			</div>
+			<g:if test="${SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
+				<div class="nav" role="navigation">
+					<ul>
+						<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]"/></g:link></li>
+					</ul>
+				</div>
+			</g:if>
 		</div>
 	</body>
 </html>

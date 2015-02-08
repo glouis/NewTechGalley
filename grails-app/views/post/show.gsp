@@ -127,15 +127,19 @@
         </div>
     </ol>
 
-    <g:form url="[resource: postInstance, action: 'delete']" method="DELETE">
-        <fieldset class="buttons">
-            <g:link class="edit" action="edit" resource="${postInstance}"><g:message code="default.button.edit.label"
-                                                                                     default="Edit"/></g:link>
-            <g:actionSubmit class="delete" action="delete"
-                            value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
-        </fieldset>
-    </g:form>
+    <sec:ifLoggedIn>
+        <g:if test="${postInstance?.user?.id == sec.loggedInUserInfo(field: "id").toLong() || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")}">
+            <g:form url="[resource: postInstance, action: 'delete']" method="DELETE">
+                <fieldset class="buttons">
+                    <g:link class="edit" action="edit" resource="${postInstance}"><g:message code="default.button.edit.label"
+                                                                                             default="Edit"/></g:link>
+                    <g:actionSubmit class="delete" action="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                </fieldset>
+            </g:form>
+        </g:if>
+    </sec:ifLoggedIn>
 </div>
 </body>
 </html>

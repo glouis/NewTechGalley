@@ -135,11 +135,18 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/logout/**':                     ['permitAll'],
     '/user/**':                       ['permitAll'],
     '/post/**':                       ['permitAll'],
+    '/post/create/**':                ['ROLE_ADMIN', 'ROLE_USER'],
+    '/post/edit/**':                  ['ROLE_ADMIN', 'ROLE_USER'],
     '/comment/**':                    ['permitAll'],
     '/comment/create/**':             ['ROLE_ADMIN', 'ROLE_USER'],
+    '/comment/edit/**':               ['ROLE_ADMIN', 'ROLE_USER'],
     '/category/**':                   ['permitAll'],
-    '/badge/**':                      ['ROLE_ADMIN', 'ROLE_USER'],
-    '/post/create/**':                ['ROLE_ADMIN', 'ROLE_USER'],
+    '/category/create/**':            ['ROLE_ADMIN'],
+    '/category/edit/**':              ['ROLE_ADMIN'],
+    '/badge/**':                      ['permitAll'],
+    '/badge/create/**':               ['ROLE_ADMIN'],
+    '/badge/edit/**':                 ['ROLE_ADMIN'],
     '/welcome/**':                    ['permitAll'],
-    '/dbconsole/**':                  ['permitAll']
+    '/dbconsole/**':                  ['permitAll'],
+    '/aboutus.gsp':                   ['permitAll']
 ]

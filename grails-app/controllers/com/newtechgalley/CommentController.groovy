@@ -1,11 +1,13 @@
 package com.newtechgalley
 
 import grails.plugin.springsecurity.SpringSecurityUtils
+import groovy.util.logging.Log
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+@Log
 @Transactional(readOnly = true)
 class CommentController {
 
@@ -22,14 +24,20 @@ class CommentController {
         respond commentInstance
     }
 
+    @Secured(['ROLE_USER'])
     def create() {
         params.user = (User) springSecurityService.currentUser
         params.creationDate = new Date()
 
-        respond new Comment(params)
+        Comment c = new Comment(params)
+
+        respond c
+
+        log.info 'Comment '+ c.id + ' constructed by user ' + c.user.id
     }
 
     @Transactional
+    @Secured(['ROLE_USER'])
     def save(Comment commentInstance) {
         if (commentInstance == null) {
             notFound()
@@ -70,6 +78,7 @@ class CommentController {
     }
 
     @Transactional
+    @Secured(['ROLE_USER'])
     def update(Comment commentInstance) {
         if (commentInstance == null) {
             notFound()

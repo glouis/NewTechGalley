@@ -104,6 +104,13 @@ p {
     color: #ffffff;
 }
 
+.footer_right {
+    background-color: darkred;
+    float: right;
+    text-align: right;
+    color: #ffffff;
+}
+
 
 .nav input {
     color: #666666;

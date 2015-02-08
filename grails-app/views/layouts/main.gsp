@@ -33,7 +33,10 @@
 			</ul>
 		</div>
 		<g:layoutBody/>
-		<div class="footer" role="contentinfo"><p>Louis & Stefany</p></div>
+		<div class="footer" role="contentinfo">
+			<span>Louis & Stefany</span>
+            <a class="footer_right" href="${createLink(uri: '/aboutus')}"><g:message code="default.aboutus.label" default="About us"/></a>
+		</div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	</body>
 </html>
