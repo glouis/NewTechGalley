@@ -73,7 +73,7 @@ class PostController {
     def edit(Post postInstance)
     {
         if(postInstance.user.id == ((User) springSecurityService.currentUser).id
-            || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
         {
             respond postInstance
         }
@@ -81,6 +81,11 @@ class PostController {
         {
             redirect(controller: "login", action: "denied")
         }
+    }
+
+    def unanswered()
+    {
+        respond Post.list(params), model: [postInstanceCount: Post.count()]
     }
 
     @Transactional
