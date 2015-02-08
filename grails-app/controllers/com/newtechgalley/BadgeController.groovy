@@ -47,7 +47,7 @@ class BadgeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'badge.label', default: 'Badge'), badgeInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'badge.label'), badgeInstance.id])
                 redirect badgeInstance
             }
             '*' { respond badgeInstance, [status: CREATED] }
@@ -78,7 +78,7 @@ class BadgeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Badge.label', default: 'Badge'), badgeInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'badge.label'), badgeInstance.id])
                 redirect badgeInstance
             }
             '*' { respond badgeInstance, [status: OK] }
@@ -102,7 +102,7 @@ class BadgeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Badge.label', default: 'Badge'), badgeInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'badge.label'), badgeInstance.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }
@@ -112,7 +112,7 @@ class BadgeController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'badge.label', default: 'Badge'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'badge.label'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }

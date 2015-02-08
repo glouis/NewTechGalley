@@ -62,7 +62,7 @@ class PostController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'post.label'), postInstance.id])
                 redirect postInstance
             }
             '*' { respond postInstance, [status: CREATED] }
@@ -108,7 +108,7 @@ class PostController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'post.label'), postInstance.id])
                 redirect postInstance
             }
             '*' { respond postInstance, [status: OK] }
@@ -135,7 +135,7 @@ class PostController {
 
             request.withFormat {
                 form multipartForm {
-                    flash.message = message(code: 'default.deleted.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                    flash.message = message(code: 'default.deleted.message', args: [message(code: 'post.label'), postInstance.id])
                     redirect(uri : '/index')
                 }
                 '*' { render status: NO_CONTENT }
@@ -150,7 +150,7 @@ class PostController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'post.label', default: 'Post'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'post.label'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }
