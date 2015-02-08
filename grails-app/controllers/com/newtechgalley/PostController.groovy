@@ -1,5 +1,6 @@
 package com.newtechgalley
 
+import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
@@ -7,6 +8,8 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class PostController {
+
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -16,11 +19,16 @@ class PostController {
     }
 
     def show(Post postInstance) {
+        if(postInstance == null)
+        {
+            render(status: 404)
+        }
         respond postInstance
     }
 
     def create() {
-        params.user = getAuthenticatedUser()
+        params.user = (User) springSecurityService.currentUser
+
         respond new Post(params)
     }
 
@@ -36,6 +44,9 @@ class PostController {
             return
         }
 
+        postInstance.creationDate = new Date()
+        postInstance.note = 0
+        postInstance.votes = new HashMap<String, VoteType>()
         postInstance.save flush: true
 
         request.withFormat {
@@ -47,8 +58,18 @@ class PostController {
         }
     }
 
-    def edit(Post postInstance) {
-        respond postInstance
+    @Secured(['ROLE_USER'])
+    def edit(Post postInstance)
+    {
+        if(postInstance.user.id == ((User) springSecurityService.currentUser).id
+            || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            respond postInstance
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
+        }
     }
 
     @Transactional
@@ -63,11 +84,12 @@ class PostController {
             return
         }
 
+        postInstance.lastEditDate = new Date()
         postInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Post.label', default: 'Post'), postInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
                 redirect postInstance
             }
             '*' { respond postInstance, [status: OK] }
@@ -75,22 +97,30 @@ class PostController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
-    def delete(Post postInstance) {
-
-        if (postInstance == null) {
-            notFound()
-            return
-        }
-
-        postInstance.delete flush: true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Post.label', default: 'Post'), postInstance.id])
-                redirect action: "index", method: "GET"
+    @Secured(['ROLE_USER'])
+    def delete(Post postInstance)
+    {
+        if(postInstance.user.id == ((User) springSecurityService.currentUser).id
+                || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
+        {
+            if (postInstance == null) {
+                notFound()
+                return
             }
-            '*' { render status: NO_CONTENT }
+
+            postInstance.delete flush: true
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.deleted.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
+                    redirect action: "index", method: "GET"
+                }
+                '*' { render status: NO_CONTENT }
+            }
+        }
+        else
+        {
+            redirect(controller: "login", action: "denied")
         }
     }
 
@@ -102,5 +132,55 @@ class PostController {
             }
             '*' { render status: NOT_FOUND }
         }
+    }
+
+    @Secured(['ROLE_USER'])
+    def upvote() {
+        User user = (User) springSecurityService.currentUser
+
+        long idPost = Long.parseLong((String) params.id)
+        Post p = Post.get(idPost)
+
+        if(p.votes.get(user.id.toString())) // existing vote
+        {
+            if(p.votes.get(user.id.toString()) == VoteType.DOWNVOTE) // changing vote
+            {
+                p.votes.put(user.id.toString(), VoteType.UPVOTE)
+                p.note = p.note + 2
+            }
+        }
+        else // new vote
+        {
+            p.votes.put(user.id.toString(), VoteType.UPVOTE)
+            ++p.note
+        }
+
+        p.save(flush: true, failOnError: true)
+        redirect(controller: "post", action:"show", id:p.id)
+    }
+
+    @Secured(['ROLE_USER'])
+    def downvote() {
+        User user = (User) springSecurityService.currentUser
+
+        def idPost = Long.parseLong((String) params.id)
+        Post p = Post.get(idPost)
+
+        if(p.votes.get(user.id.toString())) // existing vote
+        {
+            if(p.votes.get(user.id.toString()) == VoteType.UPVOTE) // changing vote
+            {
+                p.votes.put(user.id.toString(), VoteType.DOWNVOTE)
+                p.note = p.note - 2
+            }
+        }
+        else // new vote
+        {
+            p.votes.put(user.id.toString(), VoteType.DOWNVOTE)
+            --p.note
+        }
+
+        p.save(flush: true, failOnError: true)
+        redirect(controller: "post", action:"show", id:p.id)
     }
 }

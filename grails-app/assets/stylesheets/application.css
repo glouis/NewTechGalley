@@ -135,3 +135,65 @@ p {
     text-decoration: underline;
 }
 
+blockquote
+{
+    margin: 0px 0px 1.11111rem;
+    padding: 0.5rem 1.11111rem 0px 1.05556rem;
+    border-left: 1px solid #DDD;
+}
+
+blockquote p
+{
+    line-height: 1.6;
+    color: #6F6F6F;
+}
+
+blockquote cite
+{
+    display: block;
+    font-size: 0.72222rem;
+    color: #555;
+}
+
+.voter
+{
+    height: 1em;
+    position: relative;
+    margin-right: 2em;
+}
+
+.voter .downvote
+{
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 1em solid transparent;
+    border-right: 1em solid transparent;
+    border-top: 1em solid #cc0000;
+    bottom: 0;
+}
+
+.voter span {
+    margin-right: 0.5em;
+}
+
+.voter .upvote
+{
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 1em solid transparent;
+    border-right: 1em solid transparent;
+    border-bottom: 1em solid #08bf00;
+    top: 0;
+    margin-left: -2.5em;
+}
+
+.shortBtn
+{
+    margin-left: 0px;
+    padding: 0.1px;
+    height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+}
