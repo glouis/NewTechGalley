@@ -45,7 +45,7 @@ class CategoryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'category.label'), categoryInstance.id])
                 redirect categoryInstance
             }
             '*' { respond categoryInstance, [status: CREATED] }
@@ -76,7 +76,7 @@ class CategoryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'category.label'), categoryInstance.id])
                 redirect categoryInstance
             }
             '*' { respond categoryInstance, [status: OK] }
@@ -100,7 +100,7 @@ class CategoryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'category.label'), categoryInstance.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }
@@ -110,7 +110,7 @@ class CategoryController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'category.label'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }
