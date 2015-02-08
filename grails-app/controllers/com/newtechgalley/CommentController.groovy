@@ -1,13 +1,11 @@
 package com.newtechgalley
 
 import grails.plugin.springsecurity.SpringSecurityUtils
-import groovy.util.logging.Log
 import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Log
 @Transactional(readOnly = true)
 class CommentController {
 
@@ -34,8 +32,6 @@ class CommentController {
         Comment c = new Comment(params)
 
         respond c
-
-        log.info 'Comment '+ c.id + ' constructed by user ' + c.user.id
     }
 
     @Transactional
@@ -56,6 +52,8 @@ class CommentController {
         commentInstance.votes = new HashMap<String, VoteType>()
         commentInstance.save flush: true
 
+        log.info 'Comment '+ commentInstance.id + ' created by user ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'comment.label', default: 'Comment'), commentInstance.id])
@@ -67,7 +65,6 @@ class CommentController {
 
     @Secured(['ROLE_USER'])
     def edit(Comment commentInstance) {
-
         if(commentInstance.user.id == ((User) springSecurityService.currentUser).id
                 || SpringSecurityUtils.ifAllGranted("ROLE_ADMIN"))
         {
@@ -94,6 +91,8 @@ class CommentController {
 
         commentInstance.lastEditDate = new Date()
         commentInstance.save flush: true
+
+        log.info 'Comment '+ commentInstance.id + ' updated by user ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {
@@ -122,12 +121,16 @@ class CommentController {
 
             commentInstance.save(flush: true)
 
+            long cId = commentInstance.id
+
             commentInstance.delete flush: true
+
+            log.info 'Comment '+ cId + ' deleted by user ' + ((User) springSecurityService.currentUser).id
 
             request.withFormat {
                 form multipartForm {
                     flash.message = message(code: 'default.deleted.message', args: [message(code: 'comment.label', default: 'Comment'), commentInstance.id])
-                    redirect action: "index", method: "GET"
+                    redirect(controller: "post", action:"show", id:post.id)
                 }
                 '*' { render status: NO_CONTENT }
             }
@@ -170,6 +173,9 @@ class CommentController {
         }
 
         c.save(flush: true, failOnError: true)
+
+        log.info 'Comment '+ c.id + ' upvoted by ' + ((User) springSecurityService.currentUser).id
+
         redirect(controller: "post", action:"show", id:c.post.id)
     }
 
@@ -195,6 +201,9 @@ class CommentController {
         }
 
         c.save(flush: true, failOnError: true)
+
+        log.info 'Comment '+ c.id + ' downvoted by ' + ((User) springSecurityService.currentUser).id
+
         redirect(controller: "post", action:"show", id:c.post.id)
     }
 }

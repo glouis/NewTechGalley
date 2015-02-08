@@ -9,6 +9,8 @@ import grails.transaction.Transactional
 @Secured(['ROLE_ADMIN'])
 class RoleController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -40,6 +42,8 @@ class RoleController {
 
         roleInstance.save flush:true
 
+        log.info 'Role '+ roleInstance.id + ' created by administrator with id ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'role.label', default: 'Role'), roleInstance.id])
@@ -69,6 +73,8 @@ class RoleController {
 
         roleInstance.save flush:true
 
+        log.info 'Role '+ roleInstance.id + ' updated by administrator with id ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Role.label', default: 'Role'), roleInstance.id])
@@ -87,7 +93,11 @@ class RoleController {
             return
         }
 
+        long rId = roleInstance.id
+
         roleInstance.delete flush:true
+
+        log.info 'Role '+ rId + ' deleted by administrator with id ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {

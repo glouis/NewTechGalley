@@ -8,6 +8,8 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class CategoryController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -39,6 +41,8 @@ class CategoryController {
 
         categoryInstance.save flush: true
 
+        log.info 'Category '+ categoryInstance.id + ' created by admin with id ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.id])
@@ -68,6 +72,8 @@ class CategoryController {
 
         categoryInstance.save flush: true
 
+        log.info 'Category '+ categoryInstance.id + ' updated by admin with id ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.id])
@@ -86,7 +92,11 @@ class CategoryController {
             return
         }
 
+        long cId = categoryInstance.id
+
         categoryInstance.delete flush: true
+
+        log.info 'Category '+ cId + ' created by admin with id ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {

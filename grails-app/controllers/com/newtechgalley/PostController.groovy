@@ -50,7 +50,10 @@ class PostController {
         postInstance.creationDate = new Date()
         postInstance.note = 0
         postInstance.votes = new HashMap<String, VoteType>()
+
         postInstance.save flush: true
+
+        log.info 'Post '+ postInstance.id + ' created by user ' + ((User) springSecurityService.currentUser).id
 
         request.withFormat {
             form multipartForm {
@@ -91,6 +94,8 @@ class PostController {
         postInstance.lastEditDate = new Date()
         postInstance.save flush: true
 
+        log.info 'Post '+ postInstance.id + ' updated by user ' + ((User) springSecurityService.currentUser).id
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
@@ -112,12 +117,16 @@ class PostController {
                 return
             }
 
+            long pId = postInstance.id
+
             postInstance.delete flush: true
+
+            log.info 'Post '+ pId + ' deleted by user ' + ((User) springSecurityService.currentUser).id
 
             request.withFormat {
                 form multipartForm {
                     flash.message = message(code: 'default.deleted.message', args: [message(code: 'post.label', default: 'Post'), postInstance.id])
-                    redirect action: "index", method: "GET"
+                    redirect(uri : '/index')
                 }
                 '*' { render status: NO_CONTENT }
             }
@@ -160,6 +169,9 @@ class PostController {
         }
 
         p.save(flush: true, failOnError: true)
+
+        log.info 'Post '+ p.id + ' upvoted by ' + ((User) springSecurityService.currentUser).id
+
         redirect(controller: "post", action:"show", id:p.id)
     }
 
@@ -185,6 +197,9 @@ class PostController {
         }
 
         p.save(flush: true, failOnError: true)
+
+        log.info 'Post '+ p.id + ' downvoted by ' + ((User) springSecurityService.currentUser).id
+
         redirect(controller: "post", action:"show", id:p.id)
     }
 }
