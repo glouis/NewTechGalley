@@ -21,7 +21,7 @@
 		<div id="NTGLogo" role="banner"><a href="${createLink(uri: '/')}"><asset:image class="NTGImage" src="Crimson_Galley_by_crimson_galley_resized.jpg" alt="NewTechGalley"/></a><h1 class="bannerText">NewTechGalley</h1></div>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a href="${createLink(controller: 'post')}"><g:message code="default.unanswered.label" default="Unanswered"/></a></li>
+				<li><a href="${createLink(uri: '/post/unanswered')}"><g:message code="default.unanswered.label" default="Unanswered"/></a></li>
 				<li><a href="${createLink(controller: 'category')}"><g:message code="default.categories.label" default="Categories"/></a></li>
 				<li><a href="${createLink(controller: 'post')}"><g:message code="default.tophundred.label" default="Top 100"/></a></li>
 				<li><a href="${createLink(controller: 'user')}"><g:message code="default.users.label" default="Users"/></a></li>

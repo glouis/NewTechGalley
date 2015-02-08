@@ -12,6 +12,7 @@ class Post {
     Date creationDate
     Date lastEditDate
     int note
+    boolean validated
     Map<String,VoteType> votes
 
     User user
